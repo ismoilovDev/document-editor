@@ -1,13 +1,27 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import { ClientOnly } from "../components/ClientOnly";
+import { DocumentEditor } from "../components/editor";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Hujjat muharriri" },
+    { name: "description", content: "Shablonlar va o'zgaruvchilar bilan zamonaviy hujjat muharriri" },
   ];
 }
 
+function EditorLoader() {
+  return (
+    <div className="editor-loading">
+      <div className="loading-spinner" />
+      <p>Muharrir yuklanmoqda...</p>
+    </div>
+  );
+}
+
 export default function Home() {
-  return <Welcome />;
+  return (
+    <ClientOnly fallback={<EditorLoader />}>
+      <DocumentEditor />
+    </ClientOnly>
+  );
 }
